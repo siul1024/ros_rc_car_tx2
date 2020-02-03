@@ -7,8 +7,8 @@ class Drive:
     channel_s = 7
     throttle_stop = 290
     steering_center = 350
-    throttle_bwd = 350
-    throttle_fwd = 220
+    throttle_bwd = 330
+    throttle_fwd = 250
     steering_r = 420  # 420
     steering_l = 280  # 280
     pulse_freq = 50
