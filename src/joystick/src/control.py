@@ -9,12 +9,12 @@ car = Drive()
 
 
 def joy_callback(joy):
-    car.steering = (joy.steering * 70) + 350
-    car.throttle = (joy.throttle * 40) + 290
-    car.drive()
+    car.steering = int((joy.steering * 70) + 350)
+    car.throttle = int((joy.throttle * 40) + 290)
     if joy.brake == True:
         car.car_brake()
-    # def cam_callback(camera):
+    else:
+        car.drive()
 
 
 rospy.init_node('joystick_sub')
