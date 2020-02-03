@@ -3,4 +3,6 @@
           STEERING
           THROTTLE-VAL
           THROTTLE
+          BRAKE-VAL
+          BRAKE
 ))

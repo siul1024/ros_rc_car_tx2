@@ -7,14 +7,15 @@ import struct
 
 
 class JoyStick(genpy.Message):
-  _md5sum = "07077f1ca3b57b112f69aabcdabf600e"
+  _md5sum = "74d0717dbec8219b6d54e7c43afb3fa6"
   _type = "joystick/JoyStick"
   _has_header = False #flag to mark the presence of a Header object
   _full_text = """float32 steering
 float32 throttle
+bool brake
 """
-  __slots__ = ['steering','throttle']
-  _slot_types = ['float32','float32']
+  __slots__ = ['steering','throttle','brake']
+  _slot_types = ['float32','float32','bool']
 
   def __init__(self, *args, **kwds):
     """
@@ -24,7 +25,7 @@ float32 throttle
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       steering,throttle
+       steering,throttle,brake
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -37,9 +38,12 @@ float32 throttle
         self.steering = 0.
       if self.throttle is None:
         self.throttle = 0.
+      if self.brake is None:
+        self.brake = False
     else:
       self.steering = 0.
       self.throttle = 0.
+      self.brake = False
 
   def _get_types(self):
     """
@@ -54,7 +58,7 @@ float32 throttle
     """
     try:
       _x = self
-      buff.write(_get_struct_2f().pack(_x.steering, _x.throttle))
+      buff.write(_get_struct_2fB().pack(_x.steering, _x.throttle, _x.brake))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -67,8 +71,9 @@ float32 throttle
       end = 0
       _x = self
       start = end
-      end += 8
-      (_x.steering, _x.throttle,) = _get_struct_2f().unpack(str[start:end])
+      end += 9
+      (_x.steering, _x.throttle, _x.brake,) = _get_struct_2fB().unpack(str[start:end])
+      self.brake = bool(self.brake)
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -82,7 +87,7 @@ float32 throttle
     """
     try:
       _x = self
-      buff.write(_get_struct_2f().pack(_x.steering, _x.throttle))
+      buff.write(_get_struct_2fB().pack(_x.steering, _x.throttle, _x.brake))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -96,8 +101,9 @@ float32 throttle
       end = 0
       _x = self
       start = end
-      end += 8
-      (_x.steering, _x.throttle,) = _get_struct_2f().unpack(str[start:end])
+      end += 9
+      (_x.steering, _x.throttle, _x.brake,) = _get_struct_2fB().unpack(str[start:end])
+      self.brake = bool(self.brake)
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -106,9 +112,9 @@ _struct_I = genpy.struct_I
 def _get_struct_I():
     global _struct_I
     return _struct_I
-_struct_2f = None
-def _get_struct_2f():
-    global _struct_2f
-    if _struct_2f is None:
-        _struct_2f = struct.Struct("<2f")
-    return _struct_2f
+_struct_2fB = None
+def _get_struct_2fB():
+    global _struct_2fB
+    if _struct_2fB is None:
+        _struct_2fB = struct.Struct("<2fB")
+    return _struct_2fB

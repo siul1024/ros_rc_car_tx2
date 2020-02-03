@@ -20,6 +20,7 @@ class JoyStick {
       // initObj === null is a special case for deserialization where we don't initialize fields
       this.steering = null;
       this.throttle = null;
+      this.brake = null;
     }
     else {
       if (initObj.hasOwnProperty('steering')) {
@@ -34,6 +35,12 @@ class JoyStick {
       else {
         this.throttle = 0.0;
       }
+      if (initObj.hasOwnProperty('brake')) {
+        this.brake = initObj.brake
+      }
+      else {
+        this.brake = false;
+      }
     }
   }
 
@@ -43,6 +50,8 @@ class JoyStick {
     bufferOffset = _serializer.float32(obj.steering, buffer, bufferOffset);
     // Serialize message field [throttle]
     bufferOffset = _serializer.float32(obj.throttle, buffer, bufferOffset);
+    // Serialize message field [brake]
+    bufferOffset = _serializer.bool(obj.brake, buffer, bufferOffset);
     return bufferOffset;
   }
 
@@ -54,11 +63,13 @@ class JoyStick {
     data.steering = _deserializer.float32(buffer, bufferOffset);
     // Deserialize message field [throttle]
     data.throttle = _deserializer.float32(buffer, bufferOffset);
+    // Deserialize message field [brake]
+    data.brake = _deserializer.bool(buffer, bufferOffset);
     return data;
   }
 
   static getMessageSize(object) {
-    return 8;
+    return 9;
   }
 
   static datatype() {
@@ -68,7 +79,7 @@ class JoyStick {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return '07077f1ca3b57b112f69aabcdabf600e';
+    return '74d0717dbec8219b6d54e7c43afb3fa6';
   }
 
   static messageDefinition() {
@@ -76,6 +87,7 @@ class JoyStick {
     return `
     float32 steering
     float32 throttle
+    bool brake
     
     `;
   }
@@ -98,6 +110,13 @@ class JoyStick {
     }
     else {
       resolved.throttle = 0.0
+    }
+
+    if (msg.brake !== undefined) {
+      resolved.brake = msg.brake;
+    }
+    else {
+      resolved.brake = false
     }
 
     return resolved;

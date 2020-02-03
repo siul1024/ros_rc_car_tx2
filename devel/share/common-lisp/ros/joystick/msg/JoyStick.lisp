@@ -16,7 +16,12 @@
     :reader throttle
     :initarg :throttle
     :type cl:float
-    :initform 0.0))
+    :initform 0.0)
+   (brake
+    :reader brake
+    :initarg :brake
+    :type cl:boolean
+    :initform cl:nil))
 )
 
 (cl:defclass JoyStick (<JoyStick>)
@@ -36,6 +41,11 @@
 (cl:defmethod throttle-val ((m <JoyStick>))
   (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader joystick-msg:throttle-val is deprecated.  Use joystick-msg:throttle instead.")
   (throttle m))
+
+(cl:ensure-generic-function 'brake-val :lambda-list '(m))
+(cl:defmethod brake-val ((m <JoyStick>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader joystick-msg:brake-val is deprecated.  Use joystick-msg:brake instead.")
+  (brake m))
 (cl:defmethod roslisp-msg-protocol:serialize ((msg <JoyStick>) ostream)
   "Serializes a message object of type '<JoyStick>"
   (cl:let ((bits (roslisp-utils:encode-single-float-bits (cl:slot-value msg 'steering))))
@@ -48,6 +58,7 @@
     (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
     (cl:write-byte (cl:ldb (cl:byte 8 16) bits) ostream)
     (cl:write-byte (cl:ldb (cl:byte 8 24) bits) ostream))
+  (cl:write-byte (cl:ldb (cl:byte 8 0) (cl:if (cl:slot-value msg 'brake) 1 0)) ostream)
 )
 (cl:defmethod roslisp-msg-protocol:deserialize ((msg <JoyStick>) istream)
   "Deserializes a message object of type '<JoyStick>"
@@ -63,6 +74,7 @@
       (cl:setf (cl:ldb (cl:byte 8 16) bits) (cl:read-byte istream))
       (cl:setf (cl:ldb (cl:byte 8 24) bits) (cl:read-byte istream))
     (cl:setf (cl:slot-value msg 'throttle) (roslisp-utils:decode-single-float-bits bits)))
+    (cl:setf (cl:slot-value msg 'brake) (cl:not (cl:zerop (cl:read-byte istream))))
   msg
 )
 (cl:defmethod roslisp-msg-protocol:ros-datatype ((msg (cl:eql '<JoyStick>)))
@@ -73,24 +85,26 @@
   "joystick/JoyStick")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<JoyStick>)))
   "Returns md5sum for a message object of type '<JoyStick>"
-  "07077f1ca3b57b112f69aabcdabf600e")
+  "74d0717dbec8219b6d54e7c43afb3fa6")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'JoyStick)))
   "Returns md5sum for a message object of type 'JoyStick"
-  "07077f1ca3b57b112f69aabcdabf600e")
+  "74d0717dbec8219b6d54e7c43afb3fa6")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<JoyStick>)))
   "Returns full string definition for message of type '<JoyStick>"
-  (cl:format cl:nil "float32 steering~%float32 throttle~%~%~%"))
+  (cl:format cl:nil "float32 steering~%float32 throttle~%bool brake~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'JoyStick)))
   "Returns full string definition for message of type 'JoyStick"
-  (cl:format cl:nil "float32 steering~%float32 throttle~%~%~%"))
+  (cl:format cl:nil "float32 steering~%float32 throttle~%bool brake~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <JoyStick>))
   (cl:+ 0
      4
      4
+     1
 ))
 (cl:defmethod roslisp-msg-protocol:ros-message-to-list ((msg <JoyStick>))
   "Converts a ROS message object to a list"
   (cl:list 'JoyStick
     (cl:cons ':steering (steering msg))
     (cl:cons ':throttle (throttle msg))
+    (cl:cons ':brake (brake msg))
 ))

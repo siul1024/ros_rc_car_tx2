@@ -18,8 +18,11 @@ while not rospy.is_shutdown():
             done = True
     msg = JoyStick(0.0, 0.0)
     lt_x, lt_y = joy.get_left_stick()
+    rt_x, rt_y = joy.get_right_stick()
     msg.steering = lt_x
-    msg.throttle = lt_y
+    msg.throttle = rt_y
+    if joy.get_triggers() == -1:
+        msg.brake = True
     # print('lt_x: {}, lt_y: {}'.format(round(lt_x, 2), round(lt_y, 2)))
     pub.publish(msg)
     rate.sleep()

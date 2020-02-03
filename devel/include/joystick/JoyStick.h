@@ -25,11 +25,13 @@ struct JoyStick_
 
   JoyStick_()
     : steering(0.0)
-    , throttle(0.0)  {
+    , throttle(0.0)
+    , brake(false)  {
     }
   JoyStick_(const ContainerAllocator& _alloc)
     : steering(0.0)
-    , throttle(0.0)  {
+    , throttle(0.0)
+    , brake(false)  {
   (void)_alloc;
     }
 
@@ -40,6 +42,9 @@ struct JoyStick_
 
    typedef float _throttle_type;
   _throttle_type throttle;
+
+   typedef uint8_t _brake_type;
+  _brake_type brake;
 
 
 
@@ -119,12 +124,12 @@ struct MD5Sum< ::joystick::JoyStick_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "07077f1ca3b57b112f69aabcdabf600e";
+    return "74d0717dbec8219b6d54e7c43afb3fa6";
   }
 
   static const char* value(const ::joystick::JoyStick_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x07077f1ca3b57b11ULL;
-  static const uint64_t static_value2 = 0x2f69aabcdabf600eULL;
+  static const uint64_t static_value1 = 0x74d0717dbec8219bULL;
+  static const uint64_t static_value2 = 0x6d54e7c43afb3fa6ULL;
 };
 
 template<class ContainerAllocator>
@@ -145,6 +150,7 @@ struct Definition< ::joystick::JoyStick_<ContainerAllocator> >
   {
     return "float32 steering\n"
 "float32 throttle\n"
+"bool brake\n"
 ;
   }
 
@@ -165,6 +171,7 @@ namespace serialization
     {
       stream.next(m.steering);
       stream.next(m.throttle);
+      stream.next(m.brake);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
@@ -187,6 +194,8 @@ struct Printer< ::joystick::JoyStick_<ContainerAllocator> >
     Printer<float>::stream(s, indent + "  ", v.steering);
     s << indent << "throttle: ";
     Printer<float>::stream(s, indent + "  ", v.throttle);
+    s << indent << "brake: ";
+    Printer<uint8_t>::stream(s, indent + "  ", v.brake);
   }
 };
 
