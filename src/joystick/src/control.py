@@ -9,8 +9,8 @@ car = Drive()
 
 
 def joy_callback(joy):
-    Drive.steering = (joy.steering * 40) + 350
-    Drive.throttle = (joy.throttle * 70) + 290
+    Drive.steering = (joy.steering * 70) + 350
+    Drive.throttle = (joy.throttle * 40) + 290
     Drive.drive()
     # def cam_callback(camera):
 
