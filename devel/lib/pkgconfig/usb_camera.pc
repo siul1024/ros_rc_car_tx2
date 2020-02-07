@@ -1,8 +1,8 @@
-prefix=/home/work/git/git/ros_rc_car_tx2/devel
+prefix=/home/n9646/git/ros_rc_car_tx2/devel
 
 Name: usb_camera
 Description: Description of usb_camera
 Version: 0.0.0
 Cflags: 
-Libs: -L/home/work/git/git/ros_rc_car_tx2/devel/lib 
+Libs: -L/home/n9646/git/ros_rc_car_tx2/devel/lib 
 Requires: 

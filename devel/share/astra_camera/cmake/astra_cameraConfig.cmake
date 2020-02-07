@@ -67,14 +67,14 @@ set(astra_camera_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("TRUE" STREQUAL "TRUE")
-  set(astra_camera_SOURCE_PREFIX /home/work/git/git/ros_rc_car_tx2/src/ros_astra_camera)
-  set(astra_camera_DEVEL_PREFIX /home/work/git/git/ros_rc_car_tx2/devel)
+  set(astra_camera_SOURCE_PREFIX /home/n9646/git/ros_rc_car_tx2/src/ros_astra_camera)
+  set(astra_camera_DEVEL_PREFIX /home/n9646/git/ros_rc_car_tx2/devel)
   set(astra_camera_INSTALL_PREFIX "")
   set(astra_camera_PREFIX ${astra_camera_DEVEL_PREFIX})
 else()
   set(astra_camera_SOURCE_PREFIX "")
   set(astra_camera_DEVEL_PREFIX "")
-  set(astra_camera_INSTALL_PREFIX /home/work/git/git/ros_rc_car_tx2/install)
+  set(astra_camera_INSTALL_PREFIX /home/n9646/git/ros_rc_car_tx2/install)
   set(astra_camera_PREFIX ${astra_camera_INSTALL_PREFIX})
 endif()
 
@@ -91,9 +91,9 @@ endif()
 # flag project as catkin-based to distinguish if a find_package()-ed project is a catkin project
 set(astra_camera_FOUND_CATKIN_PROJECT TRUE)
 
-if(NOT "/home/work/git/git/ros_rc_car_tx2/devel/include;/home/work/git/git/ros_rc_car_tx2/src/ros_astra_camera/include " STREQUAL " ")
+if(NOT "/home/n9646/git/ros_rc_car_tx2/devel/include;/home/n9646/git/ros_rc_car_tx2/src/ros_astra_camera/include " STREQUAL " ")
   set(astra_camera_INCLUDE_DIRS "")
-  set(_include_dirs "/home/work/git/git/ros_rc_car_tx2/devel/include;/home/work/git/git/ros_rc_car_tx2/src/ros_astra_camera/include")
+  set(_include_dirs "/home/n9646/git/ros_rc_car_tx2/devel/include;/home/n9646/git/ros_rc_car_tx2/src/ros_astra_camera/include")
   if(NOT " " STREQUAL " ")
     set(_report "Check the issue tracker '' and consider creating a ticket if the problem has not been reported yet.")
   elseif(NOT " " STREQUAL " ")
@@ -110,7 +110,7 @@ if(NOT "/home/work/git/git/ros_rc_car_tx2/devel/include;/home/work/git/git/ros_r
         message(FATAL_ERROR "Project 'astra_camera' specifies '${idir}' as an include dir, which is not found.  It does not exist in '${include}'.  ${_report}")
       endif()
     else()
-      message(FATAL_ERROR "Project 'astra_camera' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/work/git/git/ros_rc_car_tx2/src/ros_astra_camera/${idir}'.  ${_report}")
+      message(FATAL_ERROR "Project 'astra_camera' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/n9646/git/ros_rc_car_tx2/src/ros_astra_camera/${idir}'.  ${_report}")
     endif()
     _list_append_unique(astra_camera_INCLUDE_DIRS ${include})
   endforeach()
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/work/git/git/ros_rc_car_tx2/devel/lib;/opt/ros/melodic/lib)
+    foreach(path /home/n9646/git/ros_rc_car_tx2/devel/lib;/home/n9646/git/ros_rc_car_tx2/devel/lib;/opt/ros/melodic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

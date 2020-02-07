@@ -1,8 +1,8 @@
-prefix=/home/work/git/git/ros_rc_car_tx2/devel
+prefix=/home/n9646/git/ros_rc_car_tx2/devel
 
 Name: joystick
 Description: Description of joystick
 Version: 0.0.0
-Cflags: -I/home/work/git/git/ros_rc_car_tx2/devel/include
-Libs: -L/home/work/git/git/ros_rc_car_tx2/devel/lib 
+Cflags: -I/home/n9646/git/ros_rc_car_tx2/devel/include
+Libs: -L/home/n9646/git/ros_rc_car_tx2/devel/lib 
 Requires: rospy std_msgs message_runtime
