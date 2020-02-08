@@ -3,6 +3,8 @@
           STEERING
           THROTTLE-VAL
           THROTTLE
-          BRAKE-VAL
-          BRAKE
+          BRK_STATUS-VAL
+          BRK_STATUS
+          REC_STATUS-VAL
+          REC_STATUS
 ))

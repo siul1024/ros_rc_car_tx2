@@ -26,12 +26,14 @@ struct JoyStick_
   JoyStick_()
     : steering(0.0)
     , throttle(0.0)
-    , brake(false)  {
+    , brk_status(false)
+    , rec_status(false)  {
     }
   JoyStick_(const ContainerAllocator& _alloc)
     : steering(0.0)
     , throttle(0.0)
-    , brake(false)  {
+    , brk_status(false)
+    , rec_status(false)  {
   (void)_alloc;
     }
 
@@ -43,8 +45,11 @@ struct JoyStick_
    typedef float _throttle_type;
   _throttle_type throttle;
 
-   typedef uint8_t _brake_type;
-  _brake_type brake;
+   typedef uint8_t _brk_status_type;
+  _brk_status_type brk_status;
+
+   typedef uint8_t _rec_status_type;
+  _rec_status_type rec_status;
 
 
 
@@ -124,12 +129,12 @@ struct MD5Sum< ::joystick::JoyStick_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "74d0717dbec8219b6d54e7c43afb3fa6";
+    return "529be6a2e8574e4ce2287a2d5c8ed377";
   }
 
   static const char* value(const ::joystick::JoyStick_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x74d0717dbec8219bULL;
-  static const uint64_t static_value2 = 0x6d54e7c43afb3fa6ULL;
+  static const uint64_t static_value1 = 0x529be6a2e8574e4cULL;
+  static const uint64_t static_value2 = 0xe2287a2d5c8ed377ULL;
 };
 
 template<class ContainerAllocator>
@@ -150,7 +155,8 @@ struct Definition< ::joystick::JoyStick_<ContainerAllocator> >
   {
     return "float32 steering\n"
 "float32 throttle\n"
-"bool brake\n"
+"bool brk_status\n"
+"bool rec_status\n"
 ;
   }
 
@@ -171,7 +177,8 @@ namespace serialization
     {
       stream.next(m.steering);
       stream.next(m.throttle);
-      stream.next(m.brake);
+      stream.next(m.brk_status);
+      stream.next(m.rec_status);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
@@ -194,8 +201,10 @@ struct Printer< ::joystick::JoyStick_<ContainerAllocator> >
     Printer<float>::stream(s, indent + "  ", v.steering);
     s << indent << "throttle: ";
     Printer<float>::stream(s, indent + "  ", v.throttle);
-    s << indent << "brake: ";
-    Printer<uint8_t>::stream(s, indent + "  ", v.brake);
+    s << indent << "brk_status: ";
+    Printer<uint8_t>::stream(s, indent + "  ", v.brk_status);
+    s << indent << "rec_status: ";
+    Printer<uint8_t>::stream(s, indent + "  ", v.rec_status);
   }
 };
 

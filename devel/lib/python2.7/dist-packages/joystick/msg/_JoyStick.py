@@ -7,15 +7,15 @@ import struct
 
 
 class JoyStick(genpy.Message):
-  _md5sum = "74d0717dbec8219b6d54e7c43afb3fa6"
+  _md5sum = "529be6a2e8574e4ce2287a2d5c8ed377"
   _type = "joystick/JoyStick"
   _has_header = False #flag to mark the presence of a Header object
   _full_text = """float32 steering
 float32 throttle
-bool brake
-"""
-  __slots__ = ['steering','throttle','brake']
-  _slot_types = ['float32','float32','bool']
+bool brk_status
+bool rec_status"""
+  __slots__ = ['steering','throttle','brk_status','rec_status']
+  _slot_types = ['float32','float32','bool','bool']
 
   def __init__(self, *args, **kwds):
     """
@@ -25,7 +25,7 @@ bool brake
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       steering,throttle,brake
+       steering,throttle,brk_status,rec_status
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -38,12 +38,15 @@ bool brake
         self.steering = 0.
       if self.throttle is None:
         self.throttle = 0.
-      if self.brake is None:
-        self.brake = False
+      if self.brk_status is None:
+        self.brk_status = False
+      if self.rec_status is None:
+        self.rec_status = False
     else:
       self.steering = 0.
       self.throttle = 0.
-      self.brake = False
+      self.brk_status = False
+      self.rec_status = False
 
   def _get_types(self):
     """
@@ -58,7 +61,7 @@ bool brake
     """
     try:
       _x = self
-      buff.write(_get_struct_2fB().pack(_x.steering, _x.throttle, _x.brake))
+      buff.write(_get_struct_2f2B().pack(_x.steering, _x.throttle, _x.brk_status, _x.rec_status))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -71,9 +74,10 @@ bool brake
       end = 0
       _x = self
       start = end
-      end += 9
-      (_x.steering, _x.throttle, _x.brake,) = _get_struct_2fB().unpack(str[start:end])
-      self.brake = bool(self.brake)
+      end += 10
+      (_x.steering, _x.throttle, _x.brk_status, _x.rec_status,) = _get_struct_2f2B().unpack(str[start:end])
+      self.brk_status = bool(self.brk_status)
+      self.rec_status = bool(self.rec_status)
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -87,7 +91,7 @@ bool brake
     """
     try:
       _x = self
-      buff.write(_get_struct_2fB().pack(_x.steering, _x.throttle, _x.brake))
+      buff.write(_get_struct_2f2B().pack(_x.steering, _x.throttle, _x.brk_status, _x.rec_status))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -101,9 +105,10 @@ bool brake
       end = 0
       _x = self
       start = end
-      end += 9
-      (_x.steering, _x.throttle, _x.brake,) = _get_struct_2fB().unpack(str[start:end])
-      self.brake = bool(self.brake)
+      end += 10
+      (_x.steering, _x.throttle, _x.brk_status, _x.rec_status,) = _get_struct_2f2B().unpack(str[start:end])
+      self.brk_status = bool(self.brk_status)
+      self.rec_status = bool(self.rec_status)
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -112,9 +117,9 @@ _struct_I = genpy.struct_I
 def _get_struct_I():
     global _struct_I
     return _struct_I
-_struct_2fB = None
-def _get_struct_2fB():
-    global _struct_2fB
-    if _struct_2fB is None:
-        _struct_2fB = struct.Struct("<2fB")
-    return _struct_2fB
+_struct_2f2B = None
+def _get_struct_2f2B():
+    global _struct_2f2B
+    if _struct_2f2B is None:
+        _struct_2f2B = struct.Struct("<2f2B")
+    return _struct_2f2B

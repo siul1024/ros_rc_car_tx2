@@ -8,15 +8,16 @@ from module.drive import Drive
 car = Drive()
 
 
-def joy_callback(joy):
+# JoyStick callback function
+def car_drive(joy):
     car.steering = int((joy.steering * 70) + 350)
     car.throttle = int((joy.throttle * 40) + 290)
-    if joy.brake == True:
+    if joy.brk_status == True:
         car.car_brake()
     else:
         car.drive()
 
 
-rospy.init_node('joystick_sub')
-sub = rospy.Subscriber('joystick', JoyStick, joy_callback)
+rospy.init_node('CarController_listener')
+sub = rospy.Subscriber('/joystick', JoyStick, car_drive)
 rospy.spin()

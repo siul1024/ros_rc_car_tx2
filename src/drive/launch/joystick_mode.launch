@@ -1,0 +1,10 @@
+<launch>
+  <include file="$(find astra_camera)/launch/astrapro.launch">
+  </include>
+  <node pkg="joystick" type="controller.py" name="CarController_talker">
+  </node>
+  <node pkg="drive" type="control.py" name="CarController_listener">
+  </node>
+  <node pkg="recoder" type="capture.py" name="recorder_node">
+  </node>
+</launch>
