@@ -27,6 +27,7 @@ class Recoder:
         self.depth_img = None
         self.seq = 0
         # GPIO set
+        GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(LED_PIN, GPIO.OUT)
         GPIO.output((LED_PIN, GPIO.LOW))
@@ -53,8 +54,8 @@ class Recoder:
         self.ts.registerCallback(self.camera_callback)
 
     def camera_callback(self, img, depth_img):
-        self.rgb_img = self.cv_bridge.imgmsg_to_cv2(img, encoding="passthrough")
-        self.depth_img = self.cv_bridge.imgmsg_to_cv2(depth_img, encoding="passthrough")
+        self.rgb_img = self.cv_bridge.imgmsg_to_cv2(img)
+        self.depth_img = self.cv_bridge.imgmsg_to_cv2(depth_img) # , encoding="passthrough")
 
     # -1~0~1
     def joy_callback(self, msg):
@@ -64,9 +65,9 @@ class Recoder:
 
     def recoding(self):
         if self.rec_status == 0:
+            GPIO.output(LED_PIN, GPIO.LOW)
             return
-        else:
-            pass
+        GPIO.output(LED_PIN, GPIO.HIGH)
         timestamp = rospy.get_rostime()
         # save image file
         rgb_fname = RGB_IMG_PATH+str(timestamp)\
