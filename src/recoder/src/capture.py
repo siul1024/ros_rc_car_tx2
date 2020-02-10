@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import rospy, message_filters
-import cv2, csv, os.path, threading
+import cv2, csv, os.path
 # import numpy as np
 import Jetson.GPIO as GPIO
 
@@ -15,22 +15,16 @@ DEFAULT_LOCATION = "/home/work/git/bag/"
 RGB_IMG_PATH = "/home/work/git/bag/imgs/"
 DEPTH_IMG_PATH = "/home/work/git/bag/depth_imgs/"
 DRIVING_LOG_PATH="/home/work/git/bag/driving_log.csv"
-LED_PIN = 12
 
 
 class Recoder:
     def __init__(self):
         self.steering = 0.0
         self.throttle = 0.0
-        self.rec_status = 0
+        self.rec_status = False
         self.rgb_img = None
         self.depth_img = None
         self.seq = 0
-        # GPIO set
-        GPIO.setwarnings(False)
-        GPIO.setmode(GPIO.BOARD)
-        GPIO.setup(LED_PIN, GPIO.OUT)
-        GPIO.output(LED_PIN, GPIO.LOW)
         # ros init node
         rospy.init_node("recorder_node", anonymous=True)
         self.record_pub = rospy.Publisher("/recorder_pub", RecodeBag, queue_size=1)
@@ -64,37 +58,30 @@ class Recoder:
         self.rec_status = msg.rec_status
 
     def recoding(self):
-        try:
-            if self.rec_status == 0:
-                GPIO.output(LED_PIN, GPIO.LOW)
-                return
-            GPIO.output(LED_PIN, GPIO.HIGH)
-            timestamp = rospy.get_rostime()
-            # save image file
-            rgb_fname = RGB_IMG_PATH+str(timestamp)\
+        if self.rec_status == False:
+            return
+        timestamp = rospy.get_rostime()
+        # save image file
+        rgb_fname = RGB_IMG_PATH+str(timestamp)\
                     +"_"+str(self.seq)+"_"+str(self.steering)+"_"+str(self.throttle)+".jpg"
-            depth_fname = DEPTH_IMG_PATH+str(timestamp)\
-                          +"_"+str(self.seq)+"_"+str(self.steering)+"_"+str(self.throttle)+".jpg"
-            cv2.imwrite(rgb_fname, self.rgb_img)
-            cv2.imwrite(depth_fname, self.depth_img)
-            # new csv line
-            self.driving_log.writerow({'RGB Image': rgb_fname, 'Depth Image': depth_fname,
-                                       'Steering': self.steering, 'Throttle': self.throttle})
-            # publish data to /recorder_pub
-            msg = RecodeBag(self.steering, self.throttle, rgb_fname, depth_fname)
-            msg.steering = self.steering
-            msg.throttle = self.throttle
-            msg.img_path = rgb_fname
-            msg.depth_path = depth_fname
-            self.record_pub.publish(msg)
-            self.seq += 1
-            # Set rate at 30 Hz
-            rospy.sleep(0.034)
-            print("recoding stop: 'BACK' button")
-        except KeyboardInterrupt:
-            pass
-        finally:
-            GPIO.cleanup(LED_PIN)
+        depth_fname = DEPTH_IMG_PATH+str(timestamp)\
+                      +"_"+str(self.seq)+"_"+str(self.steering)+"_"+str(self.throttle)+".jpg"
+        cv2.imwrite(rgb_fname, self.rgb_img)
+        cv2.imwrite(depth_fname, self.depth_img)
+        # new csv line
+        self.driving_log.writerow({'RGB Image': rgb_fname, 'Depth Image': depth_fname,
+                                   'Steering': self.steering, 'Throttle': self.throttle})
+        # publish data to /recorder_pub
+        msg = RecodeBag(self.steering, self.throttle, rgb_fname, depth_fname)
+        msg.steering = self.steering
+        msg.throttle = self.throttle
+        msg.img_path = rgb_fname
+        msg.depth_path = depth_fname
+        self.record_pub.publish(msg)
+        self.seq += 1
+        # Set rate at 30 Hz
+        rospy.sleep(0.034)
+        print("recoding stop: 'BACK' button")
 
 
 recode = Recoder()

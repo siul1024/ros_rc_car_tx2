@@ -16,6 +16,10 @@ def car_drive(joy):
         car.car_brake()
     else:
         car.drive()
+    if joy.rec_status == True:
+        car.rec_status = True
+    else:
+        car.rec_status = False
 
 
 rospy.init_node('CarController_listener')
