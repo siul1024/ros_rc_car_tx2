@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
 import rospy, message_filters
-import cv2, csv, threading, os.path
-import numpy as np
+import cv2, csv, os.path, threading
+# import numpy as np
+import Jetson.GPIO as GPIO
 
 from cv_bridge import CvBridge, CvBridgeError
 from joystick.msg import JoyStick
@@ -10,19 +11,26 @@ from sensor_msgs.msg import Image
 from recoder.msg import RecodeBag
 
 
-DEFAULT_LOCATION = "/home/n9646/bag/"
-RGB_IMG_PATH = "/home/n9646/bag/imgs/"
-DEPTH_IMG_PATH = "/home/n9646/bag/depth_imgs/"
-DRIVING_LOG_PATH="/home/n9646/bag/driving_log.csv"
+DEFAULT_LOCATION = "/home/work/git/bag/"
+RGB_IMG_PATH = "/home/work/git/bag/imgs/"
+DEPTH_IMG_PATH = "/home/work/git/bag/depth_imgs/"
+DRIVING_LOG_PATH="/home/work/git/bag/driving_log.csv"
+LED_PIN = 12
 
 
 class Recoder:
     def __init__(self):
         self.steering = 0.0
         self.throttle = 0.0
+        self.rec_status = 0
         self.rgb_img = None
         self.depth_img = None
         self.seq = 0
+        # GPIO set
+        GPIO.setmode(GPIO.BOARD)
+        GPIO.setup(LED_PIN, GPIO.OUT)
+        GPIO.output((LED_PIN, GPIO.LOW))
+        # ros init node
         rospy.init_node("recorder_node", anonymous=True)
         self.record_pub = rospy.Publisher("/recorder_pub", RecodeBag, queue_size=1)
         self.joy_sub = rospy.Subscriber("/joystick", JoyStick, self.joy_callback)
@@ -52,8 +60,13 @@ class Recoder:
     def joy_callback(self, msg):
         self.steering = msg.steering
         self.throttle = msg.throttle
+        self.rec_status = msg.rec_status
 
     def recoding(self):
+        if self.rec_status == 0:
+            return
+        else:
+            pass
         timestamp = rospy.get_rostime()
         # save image file
         rgb_fname = RGB_IMG_PATH+str(timestamp)\
@@ -75,7 +88,7 @@ class Recoder:
         self.seq += 1
         # Set rate at 30 Hz
         rospy.sleep(0.034)
-        # print("recoding stop: X button")
+        print("recoding stop: 'BACK' button")
 
 
 recode = Recoder()
