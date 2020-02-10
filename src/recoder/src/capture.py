@@ -30,7 +30,7 @@ class Recoder:
         GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(LED_PIN, GPIO.OUT)
-        GPIO.output((LED_PIN, GPIO.LOW))
+        GPIO.output(LED_PIN, GPIO.LOW)
         # ros init node
         rospy.init_node("recorder_node", anonymous=True)
         self.record_pub = rospy.Publisher("/recorder_pub", RecodeBag, queue_size=1)
