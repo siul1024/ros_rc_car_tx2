@@ -43,3 +43,7 @@ class Drive:
             time.sleep(0.3)
             GPIO.output(Drive.LED_PIN, GPIO.LOW)
             time.sleep(0.3)
+            print('blink')
+
+    def pin_clean(self):
+        GPIO.cleanup()

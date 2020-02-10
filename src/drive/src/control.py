@@ -25,3 +25,4 @@ def car_drive(joy):
 rospy.init_node('CarController_listener')
 sub = rospy.Subscriber('/joystick', JoyStick, car_drive)
 rospy.spin()
+car.pin_clean()
