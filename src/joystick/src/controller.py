@@ -35,12 +35,12 @@ while not rospy.is_shutdown():
     elif button[xbox360_controller.BACK] == 1:
         rec_status = False
 
-    msg.steering = lt_x
-    msg.throttle = rt_y
+    msg.steering = round(lt_x, 2)
+    msg.throttle = round(rt_y, 2)
     msg.brk_status = brk_status
     msg.rec_status = rec_status
 
-    print('lt_x: {}, lt_y: {}'.format(round(lt_x, 2), round(lt_y, 2)))
+    print('lt_x: {}, lt_y: {}'.format(round(lt_x, 2), round(rt_y, 2)))
     print('brake: {},\trec: {}'.format(brk_status, rec_status))
     pub.publish(msg)
     rate.sleep()
