@@ -113,10 +113,7 @@ class Recoder:
         rospy.sleep(0.034)
         print("recoding stop: 'BACK' button")
 
-    def detecting(self):
-        pass
-
-
+	
 recode = Recoder()
 
 while not rospy.is_shutdown():
