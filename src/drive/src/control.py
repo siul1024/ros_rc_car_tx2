@@ -10,7 +10,7 @@ car = Drive()
 
 # JoyStick callback function
 def car_drive(joy):
-    car.steering = int((joy.steering * 70) + 350)
+    car.steering = int((joy.steering * 110) + 380)
     car.throttle = int((joy.throttle * 40) + 290)
     if joy.brk_status:
         car.car_brake()

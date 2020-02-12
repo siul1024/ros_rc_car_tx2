@@ -42,14 +42,15 @@ class Recoder:
         #self.lock = threading.RLock()
         self.cv_bridge = CvBridge()
         # message filters
-        self.rgb_cam_sub = message_filters.Subscriber("/camera/rgb/image_raw", Image)
-        self.depth_cam_sub = message_filters.Subscriber("/camera/depth/image_raw", Image)
-        self.ts = message_filters.ApproximateTimeSynchronizer([self.rgb_cam_sub, self.depth_cam_sub], 10, 0.5)
-        self.ts.registerCallback(self.camera_callback)
+        self.rgb_cam_sub = rospy.Subscriber("/camera/rgb/image_raw", Image, self.camera_callback)
+        # self.rgb_cam_sub = message_filters.Subscriber("/camera/rgb/image_raw", Image)
+        # self.depth_cam_sub = message_filters.Subscriber("/camera/depth/image_raw", Image)
+        # self.ts = message_filters.ApproximateTimeSynchronizer([self.rgb_cam_sub, self.depth_cam_sub], 10, 0.5)
+        # self.ts.registerCallback(self.camera_callback)
 
     def camera_callback(self, img, depth_img):
         self.rgb_img = self.cv_bridge.imgmsg_to_cv2(img)
-        self.depth_img = self.cv_bridge.imgmsg_to_cv2(depth_img) # , encoding="passthrough")
+        # self.depth_img = self.cv_bridge.imgmsg_to_cv2(depth_img) # , encoding="passthrough")
 
     # -1~0~1
     def joy_callback(self, msg):
@@ -64,10 +65,11 @@ class Recoder:
         # save image file
         rgb_fname = RGB_IMG_PATH+str(timestamp)\
                     +"_"+str(self.seq)+"_"+str(self.steering)+"_"+str(self.throttle)+".jpg"
-        depth_fname = DEPTH_IMG_PATH+str(timestamp)\
-                      +"_"+str(self.seq)+"_"+str(self.steering)+"_"+str(self.throttle)+".jpg"
+        # depth_fname = DEPTH_IMG_PATH+str(timestamp)\
+        #               +"_"+str(self.seq)+"_"+str(self.steering)+"_"+str(self.throttle)+".jpg"
+        depth_fname = "unused"
         cv2.imwrite(rgb_fname, self.rgb_img)
-        cv2.imwrite(depth_fname, self.depth_img)
+        # cv2.imwrite(depth_fname, self.depth_img)
         # new csv line
         self.driving_log.writerow({'RGB Image': rgb_fname, 'Depth Image': depth_fname,
                                    'Steering': self.steering, 'Throttle': self.throttle})
@@ -76,7 +78,7 @@ class Recoder:
         msg.steering = self.steering
         msg.throttle = self.throttle
         msg.img_path = rgb_fname
-        msg.depth_path = depth_fname
+        # msg.depth_path = depth_fname
         self.record_pub.publish(msg)
         self.seq += 1
         # Set rate at 30 Hz
