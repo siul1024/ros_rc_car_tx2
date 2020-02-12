@@ -38,12 +38,13 @@ class Drive:
         self.pwm.set_pwm(Drive.channel_t, 0, self.throttle)
 
     def led_blink(self):
-        while self.rec_status:
-            GPIO.output(Drive.LED_PIN, GPIO.HIGH)
-            time.sleep(0.3)
-            GPIO.output(Drive.LED_PIN, GPIO.LOW)
-            time.sleep(0.3)
-            print('blink')
+        while True:
+            if self.rec_status:
+                GPIO.output(Drive.LED_PIN, GPIO.HIGH)
+                time.sleep(0.3)
+                GPIO.output(Drive.LED_PIN, GPIO.LOW)
+                time.sleep(0.3)
+                print('blink')
 
     def pin_clean(self):
         GPIO.cleanup()

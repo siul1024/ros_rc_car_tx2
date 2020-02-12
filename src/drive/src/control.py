@@ -12,11 +12,11 @@ car = Drive()
 def car_drive(joy):
     car.steering = int((joy.steering * 70) + 350)
     car.throttle = int((joy.throttle * 40) + 290)
-    if joy.brk_status == True:
+    if joy.brk_status:
         car.car_brake()
     else:
         car.drive()
-    if joy.rec_status == True:
+    if joy.rec_status:
         car.rec_status = True
     else:
         car.rec_status = False
