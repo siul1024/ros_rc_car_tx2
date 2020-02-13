@@ -27,10 +27,10 @@ parser.add_argument("--width", type=int, default=1280, help="desired width of ca
 parser.add_argument("--height", type=int, default=720, help="desired height of camera stream (default is 720 pixels)")
 opt = parser.parse_known_args()[0]
 
-DEFAULT_LOCATION = "/home/work/git/bag/"
-RGB_IMG_PATH = "/home/work/git/bag/imgs/"
-DEPTH_IMG_PATH = "/home/work/git/bag/depth_imgs/"
-DRIVING_LOG_PATH="/home/work/git/bag/driving_log.csv"
+DEFAULT_LOCATION = "/home/work/git/[---]/bag/"
+RGB_IMG_PATH = "/home/work/git/[---]/bag/imgs/"
+DEPTH_IMG_PATH = "/home/work/git/[---]/bag/depth_imgs/"
+DRIVING_LOG_PATH="/home/work/git/[---]/bag/driving_log.csv"
 
 
 class Recoder:
