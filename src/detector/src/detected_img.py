@@ -21,8 +21,8 @@ parser.add_argument("--network", type=str, default="ssd-mobilenet-v2", help="pre
 parser.add_argument("--overlay", type=str, default="box,labels,conf", help="detection overlay flags (e.g. --overlay=box,labels,conf)\nvalid combinations are:  'box', 'labels', 'conf', 'none'")
 parser.add_argument("--threshold", type=float, default=0.5, help="minimum detection threshold to use") 
 parser.add_argument("--camera", type=str, default="1", help="index of the MIPI CSI camera to use (e.g. CSI camera 0)\nor for VL42 cameras, the /dev/video device to use.\nby default, MIPI CSI camera 0 will be used.")
-parser.add_argument("--width", type=int, default=320, help="desired width of camera stream (default is 1280 pixels)")
-parser.add_argument("--height", type=int, default=240, help="desired height of camera stream (default is 720 pixels)")
+parser.add_argument("--width", type=int, default=640, help="desired width of camera stream (default is 1280 pixels)")
+parser.add_argument("--height", type=int, default=480, help="desired height of camera stream (default is 720 pixels)")
 opt = parser.parse_known_args()[0]
 
 
@@ -44,11 +44,11 @@ class Detector():
         #cv2.imshow("--", img)
         #cv2.waitKey(1)
         img = jetson.utils.cudaFromNumpy(img)
-        detections = self.net.Detect(img, 320, 240)
+        detections = self.net.Detect(img, opt.width, opt.height)
         print("detected {:d} objects in image".format(len(detections)))
         for detection in detections:
             print(detection)
-        img = jetson.utils.cudaToNumpy(img, 320, 240, 4) #array, width, hight, depth
+        img = jetson.utils.cudaToNumpy(img, opt.width, opt.height, 4) #array, width, hight, depth
         img = cv2.cvtColor(img, cv2.COLOR_RGBA2RGB).astype(np.uint8)
         #cv2.imshow("--", img)
         #cv2.waitKey(1)
