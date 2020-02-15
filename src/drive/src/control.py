@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
 import rospy
-from joystick.msg import JoyStick
+from controller.msg import Controller
 from module.drive import Drive
 
 
 car = Drive()
 
 
-# JoyStick callback function
+# Controller callback function
 def car_drive(joy):
     car.steering = int((joy.steering * 110) + 360)
     car.throttle = int((joy.throttle * 40) + 290)
@@ -23,6 +23,6 @@ def car_drive(joy):
 
 
 rospy.init_node('CarController_listener')
-sub = rospy.Subscriber('/joystick', JoyStick, car_drive)
+sub = rospy.Subscriber('/controller', Controller, car_drive)
 rospy.spin()
 car.pin_clean()
