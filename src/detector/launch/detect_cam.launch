@@ -1,0 +1,6 @@
+<launch>
+  <include file="$(find usb_camera)/launch/usb_camera.launch">
+  </include>
+  <node pkg="detector" type="detected_img.py" name="detector">
+  </node>
+</launch>
