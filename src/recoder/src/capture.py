@@ -3,12 +3,10 @@
 import rospy  # , message_filters
 import cv2, csv, os.path
 import numpy as np
-import Jetson.GPIO as GPIO
 import jetson.inference
 import jetson.utils
 
 from cv_bridge import CvBridge, CvBridgeError
-from joystick.msg import JoyStick
 from sensor_msgs.msg import Image
 from recoder.msg import RecodeBag
 

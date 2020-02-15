@@ -1,7 +1,7 @@
 <launch>
   <include file="$(find usb_camera)/launch/usb_camera.launch">
   </include>
-  <node pkg="joystick" type="controller.py" name="CarController_talker">
+  <node pkg="controller" type="joystick.py" name="joystick_talker">
   </node>
   <node pkg="drive" type="control.py" name="CarController_listener">
   </node>

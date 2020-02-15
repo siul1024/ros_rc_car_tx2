@@ -2,11 +2,11 @@
 
 import pygame
 import rospy
-from joystick.msg import JoyStick
+from controller.msg import Controller
 from module import xbox360_controller
 
 rospy.init_node('CarController_talker')
-pub = rospy.Publisher('/joystick', JoyStick, queue_size=1)
+pub = rospy.Publisher('/controller', Controller, queue_size=1)
 rate = rospy.Rate(10.0)
 
 pygame.init()
@@ -19,7 +19,7 @@ while not rospy.is_shutdown():
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
-    msg = JoyStick(0.0, 0.0, brk_status, rec_status)
+    msg = Controller(0.0, 0.0, brk_status, rec_status)
     # stick status
     lt_x, lt_y = joy.get_left_stick()
     rt_x, rt_y = joy.get_right_stick()

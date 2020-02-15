@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import rospy
-from joystick.msg import JoyStick
+from controller.msg import Controller
 from module.drive import Drive
 
 
@@ -23,6 +23,6 @@ def car_drive(joy):
 
 
 rospy.init_node('CarController_listener')
-sub = rospy.Subscriber('/joystick', JoyStick, car_drive)
+sub = rospy.Subscriber('/controller', Controller, car_drive)
 rospy.spin()
 car.pin_clean()
