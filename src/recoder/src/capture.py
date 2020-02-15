@@ -7,6 +7,7 @@ import numpy as np
 # import jetson.utils
 
 from cv_bridge import CvBridge, CvBridgeError
+from controller.msg import Controller
 from sensor_msgs.msg import Image
 from recoder.msg import RecodeBag
 
@@ -42,7 +43,7 @@ class Recoder:
         # ros init node
         rospy.init_node("recorder_node", anonymous=True)
         self.record_pub = rospy.Publisher("/recorder_pub", RecodeBag, queue_size=1)
-        self.joy_sub = rospy.Subscriber("/joystick", JoyStick, self.joy_callback)
+        self.joy_sub = rospy.Subscriber("/controller", Controller, self.joy_callback)
 
         # Open driving_log file
         if os.path.isfile(DRIVING_LOG_PATH) is True:
@@ -56,7 +57,7 @@ class Recoder:
         #self.lock = threading.RLock()
         self.cv_bridge = CvBridge()
         # message filters
-        self.rgb_cam_sub = rospy.Subscriber("/image_raw", Image, self.camera_callback)
+        self.rgb_cam_sub = rospy.Subscriber("/video/image", Image, self.camera_callback)
         # self.rgb_cam_sub = message_filters.Subscriber("/camera/rgb/image_raw", Image)
         # self.depth_cam_sub = message_filters.Subscriber("/camera/depth/image_raw", Image)
         # self.ts = message_filters.ApproximateTimeSynchronizer([self.rgb_cam_sub, self.depth_cam_sub], 10, 0.5)
@@ -78,11 +79,12 @@ class Recoder:
         if self.rec_status == False:
             return
         rgb_img = self.rgb_img
+        # rgb_img = cv2.cvtColor(self.rgb_img, cv2.COLOR_BGR2RGBA).astype(np.float32)
         # rgb_img = jetson.utils.cudaFromNumpy(rgb_img)
-        detections = self.net.Detect(rgb_img, 320, 240)
-        print("detected {:d} objects in image".format(len(detections)))
-        for detection in detections:
-            print(detection)
+        # detections = self.net.Detect(rgb_img, 320, 240)
+        # print("detected {:d} objects in image".format(len(detections)))
+        # for detection in detections:
+        #     print(detection)
         steering = self.steering
         throttle = self.throttle
         timestamp = rospy.get_rostime()

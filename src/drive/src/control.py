@@ -8,7 +8,7 @@ from module.drive import Drive
 car = Drive()
 
 
-# JoyStick callback function
+# Controller callback function
 def car_drive(joy):
     car.steering = int((joy.steering * 110) + 360)
     car.throttle = int((joy.throttle * 40) + 290)

@@ -24,7 +24,7 @@ from cv_bridge import CvBridge, CvBridgeError
 
 # ROS message
 from sensor_msgs.msg import Image
-from joystick.msg import JoyStick
+from controller.msg import Controller
 
 
 steering = 0.0
@@ -45,7 +45,7 @@ class Pilot:
         self.lock = threading.RLock()
         rospy.init_node("pilot_model", anonymous=True)
         # self.joy = rospy.Subscriber('joy', Joy, self.joy_callback)
-        self.control_signal = rospy.Publisher('/joystick', JoyStick, queue_size=1)
+        self.control_signal = rospy.Publisher('/controller', Controller, queue_size=1)
         self.camera = rospy.Subscriber('/video/image', Image, self.callback, queue_size=1)
         rospy.Timer(rospy.Duration(0.005), self.send_control)
 
@@ -67,7 +67,7 @@ class Pilot:
         if self.completed_cycle is False:
             return
         # Publish a rc_car_msgs
-        msg = JoyStick()
+        msg = Controller()
 #        msg.header.stamp = rospy.Time.now()
         msg.steer = steering
         msg.throttle = throttle

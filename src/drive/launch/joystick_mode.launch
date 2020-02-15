@@ -1,5 +1,5 @@
 <launch>
-  <include file="$(find usb_camera)/launch/usb_camera.launch">
+  <include file="$(find detector)/launch/detect_cam.launch">
   </include>
   <node pkg="controller" type="joystick.py" name="joystick_talker">
   </node>
