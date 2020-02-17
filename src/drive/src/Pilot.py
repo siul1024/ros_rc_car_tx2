@@ -69,10 +69,10 @@ class Pilot:
         # Publish a rc_car_msgs
         msg = Controller()
 #        msg.header.stamp = rospy.Time.now()
-        msg.steer = steering
+        msg.steering = steering
         msg.throttle = throttle
         self.control_signal.publish(msg)
-        print("Steer: {:5.4f} Throttle {:5.4f}".format(steering, throttle))
+        print("Steering: {:5.4f} Throttle {:5.4f}".format(steering, throttle))
         self.completed_cycle = False
 
 
