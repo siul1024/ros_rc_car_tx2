@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import rospy  # , message_filters
 import cv2, csv, os.path
@@ -47,10 +47,10 @@ class Recoder:
 
         # Open driving_log file
         if os.path.isfile(DRIVING_LOG_PATH) is True:
-            f = open(DRIVING_LOG_PATH, 'ab')
+            f = open(DRIVING_LOG_PATH, 'a', newline="")
             self.driving_log = csv.DictWriter(f, fieldnames=["RGB Image", "Depth Image", "Steering", "Throttle"])
         else:
-            f = open(DRIVING_LOG_PATH, 'wb')
+            f = open(DRIVING_LOG_PATH, 'w', newline=""))
             self.driving_log = csv.DictWriter(f, fieldnames=["RGB Image", "Depth Image", "Steering", "Throttle"])
             self.driving_log.writeheader()
         # Lock camera image
