@@ -69,8 +69,8 @@ else:
 model.vision_model.summary()
 model.vision_model.compile(optimizer=Adam(lr=0.00002), loss=[mse_steer_angle])
 
-#checkpoint = ModelCheckpoint('./checkpoints/weights.{epoch:02d}-{val_loss:.3f}.h5', save_weights_only=True)
-model.vision_model.fit(images, measurements, batch_size=128, epochs=1, # callbacks=[checkpoint],
+checkpoint = ModelCheckpoint('./checkpoints/weights.{epoch:02d}-{val_loss:.3f}.h5', save_weights_only=True)
+model.vision_model.fit(images, measurements, batch_size=128, epochs=1, callbacks=[checkpoint],
                        validation_split=0.3, shuffle=True)
 
 # Save model
