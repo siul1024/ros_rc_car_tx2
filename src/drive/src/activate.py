@@ -54,8 +54,7 @@ def load_model(args):
 
 if __name__ == "__main__":
     
-    args = rospy.get_param('/home/work/git/TXcar/model/cnn_auto_run.json')
     print("Activating AutoPilot model..\n")
-    pilot = Pilot(lambda: load_model(args), drive)
+    pilot = Pilot(lambda: load_model('/home/work/git/TXcar/model/cnn_auto_run.json'), drive)
     rospy.spin()
 
