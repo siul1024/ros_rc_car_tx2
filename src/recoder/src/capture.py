@@ -50,7 +50,7 @@ class Recoder:
             f = open(DRIVING_LOG_PATH, 'a', newline="")
             self.driving_log = csv.DictWriter(f, fieldnames=["RGB Image", "Depth Image", "Steering", "Throttle"])
         else:
-            f = open(DRIVING_LOG_PATH, 'w', newline=""))
+            f = open(DRIVING_LOG_PATH, 'w', newline="")
             self.driving_log = csv.DictWriter(f, fieldnames=["RGB Image", "Depth Image", "Steering", "Throttle"])
             self.driving_log.writeheader()
         # Lock camera image
