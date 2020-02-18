@@ -10,7 +10,7 @@ import rospy
 import argparse
 import time
 import cv2
-from Pilot import Pilot
+from module.Pilot import Pilot
 
 
 def drive(model, image):
