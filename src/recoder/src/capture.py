@@ -43,7 +43,7 @@ class Recoder:
         #self.lock = threading.RLock()
         self.cv_bridge = CvBridge()
         # message filters
-        self.rgb_cam_sub = rospy.Subscriber("/video/image", Image, self.camera_callback)
+        self.rgb_cam_sub = rospy.Subscriber("/stereo/image_raw", Image, self.camera_callback)
         # self.rgb_cam_sub = message_filters.Subscriber("/camera/rgb/image_raw", Image)
         # self.depth_cam_sub = message_filters.Subscriber("/camera/depth/image_raw", Image)
         # self.ts = message_filters.ApproximateTimeSynchronizer([self.rgb_cam_sub, self.depth_cam_sub], 10, 0.5)
@@ -55,8 +55,8 @@ class Recoder:
 
     # -1~0~1
     def joy_callback(self, msg):
-        self.steering = msg.steering
-        self.throttle = msg.throttle
+        self.steering = round(msg.steering, 3)
+        self.throttle = round(msg.throttle, 3)
         self.rec_status = msg.rec_status
 
     def recoding(self):
