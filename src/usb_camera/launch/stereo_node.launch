@@ -10,6 +10,7 @@
     <!-- other supported params: auto_exposure, exposure_absolute, brightness, power_line_frequency -->
 
     <param name="left/device" type="string" value="/dev/video1" />
+    <param name="left/rotate" type="bool" value="True" />
     <param name="right/device" type="string" value="/dev/video2" />
   </node>
 </launch>
