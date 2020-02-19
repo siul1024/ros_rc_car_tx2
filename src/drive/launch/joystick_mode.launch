@@ -1,6 +1,8 @@
 <launch>
-  <include file="$(find detector)/launch/detect_cam.launch">
+  <include file="$(find usb_camera)/launch/stereo_node.launch">
   </include>
+  <node pkg="usb_camera" type="stereo_cam.py" name="stereo_cam_talker">
+  </node>
   <node pkg="controller" type="joystick.py" name="joystick_talker">
   </node>
   <node pkg="drive" type="control.py" name="CarController_listener">
