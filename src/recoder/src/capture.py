@@ -66,7 +66,7 @@ class Recoder:
         # self.detection = 0
 
     def camera_callback(self, img):
-        self.rgb_img = self.cv_bridge.imgmsg_to_cv2(img) #, desired_encoding="bgr8")
+        self.rgb_img = self.cv_bridge.imgmsg_to_cv2(img, desired_encoding="bgr8")
         # self.depth_img = self.cv_bridge.imgmsg_to_cv2(depth_img) # , encoding="passthrough")
 
     # -1~0~1
